@@ -1,4 +1,5 @@
 import MessageForm from "@/components/MessageForm";
+import MessageHistory from "@/components/MessageHistory";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
         </h1>
 
         <MessageForm />
+        <MessageHistory />
       </div>
     </main>
   );
