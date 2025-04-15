@@ -1,3 +1,4 @@
+import DataMetrics from "@/components/DataMetrics";
 import MessageForm from "@/components/MessageForm";
 import MessageHistory from "@/components/MessageHistory";
 
@@ -11,6 +12,7 @@ export default function Home() {
 
         <MessageForm />
         <MessageHistory />
+        <DataMetrics />
       </div>
     </main>
   );
