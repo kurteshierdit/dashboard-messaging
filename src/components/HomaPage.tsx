@@ -34,6 +34,7 @@ export default function HomePage() {
     };
 
     setMessages((prev) => [...prev, optimisticMessage]);
+    await new Promise((resolve) => setTimeout(resolve, 600));
 
     try {
       const res = await fetch("/api/messages", {
