@@ -1,6 +1,7 @@
 "use client";
 
 import { Message } from "@/lib/messageStore";
+import React from "react";
 
 type Props = {
   messages: Message[];
