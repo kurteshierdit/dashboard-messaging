@@ -6,6 +6,7 @@ import MessageForm from "@/components/MessageForm";
 import MessageHistory from "@/components/MessageHistory";
 import { Message } from "@/lib/messageStore";
 import { v4 as uuid } from "uuid";
+import toast from "react-hot-toast";
 
 export default function HomePage() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -52,8 +53,11 @@ export default function HomePage() {
       );
 
       setStatsRefresh((prev) => prev + 1);
+
+      toast.success("Message sent!");
     } catch (err) {
       console.error("Failed to submit message:", err);
+      toast.error("Message failed to send");
     }
   };
 
