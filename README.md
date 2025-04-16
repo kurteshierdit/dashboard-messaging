@@ -11,6 +11,7 @@ This application allows users to send messages, view message history, and see ba
 - Mock API for storing messages
 - Message history table
 - Stats chart with Pie Chart (Recharts)
+- Light/Dark Mode
 - Basic loading & empty states
 - Tests using Vitest and Testing Library
 
