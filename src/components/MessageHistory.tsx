@@ -1,5 +1,8 @@
 "use client";
 
+import { Message } from "@/lib/messageStore";
+import { useEffect, useState } from "react";
+
 const mockDataMessages = [
   { id: 1, recipient: "Alice", message: "Hello there!", status: "Sent" },
   { id: 2, recipient: "Bob", message: "How are you?", status: "Delivered" },
@@ -7,6 +10,23 @@ const mockDataMessages = [
 ];
 
 export default function MessageHistory() {
+  const [messages, setMessages] = useState<Message[]>([]);
+
+  useEffect(() => {
+    async function getAllMessages() {
+      try {
+        const res = await fetch("/api/messages");
+        const data = await res.json();
+
+        setMessages(data);
+      } catch (error) {
+        console.error("Failed to fetch messages:", error);
+      }
+    }
+
+    getAllMessages();
+  }, []);
+
   return (
     <div className="w-full">
       <h2 className="text-lg font-semibold mb-4 text-black">Message History</h2>
@@ -21,7 +41,7 @@ export default function MessageHistory() {
             </tr>
           </thead>
           <tbody>
-            {mockDataMessages.map(({ id, recipient, message, status }) => (
+            {messages.map(({ id, recipient, message, status }) => (
               <tr key={id} className="border-t hover:bg-gray-50">
                 <td className="px-4 py-2 text-black">{recipient}</td>
                 <td className="px-4 py-2 text-black">{message}</td>
