@@ -53,8 +53,8 @@ export default function DataMetrics({ refreshData }: Props) {
   }, [refreshData]);
 
   return (
-    <div className="w-full h-full bg-white border border-gray-200 rounded-lg p-6 space-y-4">
-      <h2 className="text-lg font-semibold mb-4 text-gray-900">
+    <div className="w-full h-full bg-white border border-gray-200 rounded-lg p-6 space-y-4 dark:bg-gray-800 dark:border-gray-700">
+      <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
         Message Stats
       </h2>
 

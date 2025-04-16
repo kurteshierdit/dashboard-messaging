@@ -7,6 +7,8 @@ import MessageHistory from "@/components/MessageHistory";
 import { Message } from "@/lib/messageStore";
 import { v4 as uuid } from "uuid";
 import toast from "react-hot-toast";
+import ToggleButton from "./ToggleButton";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 export default function HomePage() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -35,7 +37,6 @@ export default function HomePage() {
     };
 
     setMessages((prev) => [...prev, optimisticMessage]);
-    await new Promise((resolve) => setTimeout(resolve, 600));
 
     try {
       const res = await fetch("/api/messages", {
@@ -62,16 +63,23 @@ export default function HomePage() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-100 flex items-center justify-center p-4 sm:p-8">
-      <div className="w-full max-w-4xl bg-white shadow-md rounded-xl p-6 sm:p-8 space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900">
-          Messaging Dashboard
-        </h1>
+    <>
+      <ThemeProvider>
+        <main className="min-h-screen bg-gray-100 dark:bg-gray-700 flex items-center justify-center p-4 sm:p-8">
+          <div className="w-full max-w-4xl bg-white dark:bg-gray-900 shadow-md rounded-xl p-6 sm:p-8 space-y-6">
+            <div className="flex justify-between items-center">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                Messaging Dashboard
+              </h1>
+              <ToggleButton />
+            </div>
 
-        <MessageForm onSubmit={handleAddMessage} />
-        <MessageHistory messages={messages} loading={loading} />
-        <DataMetrics refreshData={statsRefresh} />
-      </div>
-    </main>
+            <MessageForm onSubmit={handleAddMessage} />
+            <MessageHistory messages={messages} loading={loading} />
+            <DataMetrics refreshData={statsRefresh} />
+          </div>
+        </main>
+      </ThemeProvider>
+    </>
   );
 }
