@@ -2,11 +2,24 @@
 
 import { useState } from "react";
 
-export default function MessageForm() {
+type Props = {
+  onSubmit: (recipient: string, message: string) => void;
+};
+
+export default function MessageForm({ onSubmit }: Props) {
   const [recipient, setRecipient] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!recipient || !message) return;
+
+    onSubmit(recipient, message);
+
+    setRecipient("");
+    setMessage("");
+  };
 
   return (
     <form
@@ -31,7 +44,7 @@ export default function MessageForm() {
 
       <button
         type="submit"
-        className="bg-gray-800 text-white px-6 py-2 rounded disabled:opacity-50"
+        className="bg-gray-800 text-white px-6 py-2 rounded disabled:opacity-50 cursor-pointer"
       >
         Send
       </button>
