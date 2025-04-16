@@ -10,6 +10,7 @@ import { v4 as uuid } from "uuid";
 export default function HomePage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
+  const [statsRefresh, setStatsRefresh] = useState(0);
 
   useEffect(() => {
     async function fetchMessages() {
@@ -48,6 +49,8 @@ export default function HomePage() {
           message.id === optimisticMessage.id ? saved : message
         )
       );
+
+      setStatsRefresh((prev) => prev + 1);
     } catch (err) {
       console.error("Failed to submit message:", err);
     }
@@ -66,7 +69,7 @@ export default function HomePage() {
         ) : (
           <MessageHistory messages={messages} />
         )}
-        <DataMetrics />
+        <DataMetrics refreshData={statsRefresh} />
       </div>
     </main>
   );
