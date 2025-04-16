@@ -40,7 +40,6 @@ export default function DataMetrics({ refreshData }: Props) {
             color: colors[name as keyof typeof colors],
           }))
           .filter((entry) => entry.value > 0);
-        console.log(chartData);
 
         setChartData(formattedData);
       } catch (err) {
@@ -54,8 +53,10 @@ export default function DataMetrics({ refreshData }: Props) {
   }, [refreshData]);
 
   return (
-    <div className="w-full h-full">
-      <h2 className="text-lg font-semibold mb-4 text-black">Message Stats</h2>
+    <div className="w-full h-full bg-white border border-gray-200 rounded-lg p-6 space-y-4">
+      <h2 className="text-lg font-semibold mb-4 text-gray-900">
+        Message Stats
+      </h2>
 
       {loading ? (
         <p className="text-sm text-gray-500">Loading stats...</p>
