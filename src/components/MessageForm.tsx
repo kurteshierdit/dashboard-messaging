@@ -9,17 +9,26 @@ type Props = {
 export default function MessageForm({ onSubmit }: Props) {
   const [recipient, setRecipient] = useState("");
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!recipient || !message) return;
 
-    onSubmit(recipient, message);
-
-    setRecipient("");
-    setMessage("");
+    setIsSubmitting(true);
+    try {
+      await onSubmit(recipient, message);
+      setRecipient("");
+      setMessage("");
+    } catch (error) {
+      console.error("Message submission failed:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const isFormInvalid = !recipient.trim() || !message.trim();
 
   return (
     <form
@@ -44,9 +53,10 @@ export default function MessageForm({ onSubmit }: Props) {
 
       <button
         type="submit"
-        className="bg-gray-800 text-white px-6 py-2 rounded disabled:opacity-50 cursor-pointer"
+        disabled={isSubmitting || isFormInvalid}
+        className="bg-gray-800 text-white px-6 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
       >
-        Send
+        {isSubmitting ? "Sending..." : "Send"}
       </button>
     </form>
   );
