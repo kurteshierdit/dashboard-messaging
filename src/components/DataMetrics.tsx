@@ -33,11 +33,14 @@ export default function DataMetrics({ refreshData }: Props) {
         const res = await fetch("/api/stats");
         const stats = await res.json();
 
-        const formattedData = Object.entries(stats).map(([name, value]) => ({
-          name,
-          value: Number(value),
-          color: colors[name as keyof typeof colors],
-        }));
+        const formattedData = Object.entries(stats)
+          .map(([name, value]) => ({
+            name,
+            value: Number(value),
+            color: colors[name as keyof typeof colors],
+          }))
+          .filter((entry) => entry.value > 0);
+        console.log(chartData);
 
         setChartData(formattedData);
       } catch (err) {
@@ -56,6 +59,8 @@ export default function DataMetrics({ refreshData }: Props) {
 
       {loading ? (
         <p className="text-sm text-gray-500">Loading stats...</p>
+      ) : chartData.length === 0 ? (
+        <p className="text-sm text-gray-400 italic">No stats available yet.</p>
       ) : (
         <div className="w-full h-[300px]">
           <ResponsiveContainer width="100%" height="100%">

@@ -65,11 +65,7 @@ export default function HomePage() {
         </h1>
 
         <MessageForm onSubmit={handleAddMessage} />
-        {loading ? (
-          <p className="text-gray-500 text-sm">Loading messages...</p>
-        ) : (
-          <MessageHistory messages={messages} />
-        )}
+        <MessageHistory messages={messages} loading={loading} />
         <DataMetrics refreshData={statsRefresh} />
       </div>
     </main>
